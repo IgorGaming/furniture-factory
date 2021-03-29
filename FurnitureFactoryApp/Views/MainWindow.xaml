@@ -1,0 +1,38 @@
+﻿<catel:Window x:Class="FurnitureFactoryApp.Views.MainWindow"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:catel="http://schemas.catelproject.com"
+              ResizeMode="NoResize"
+              SizeToContent="Height"
+              Width="250">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top"
+              Padding="5">
+            <MenuItem Header="Приложение">
+                <MenuItem Header="Выход"
+                          Command="{Binding CloseApplicationCommand}"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <StackPanel DockPanel.Dock="Bottom"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,10,0,10">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin"
+                            Value="10 5" />
+                    <Setter Property="Height"
+                            Value="50" />
+                </Style>
+            </StackPanel.Resources>
+
+            <Button Command="{Binding OpenCustomerWindowCommand}">Заказчики</Button>
+            <Button Command="{Binding OpenProductWindowCommand}">Продукты</Button>
+            <Button Command="{Binding OpenOrderWindowCommand}">Заказы</Button>
+        </StackPanel>
+    </DockPanel>
+
+
+
+</catel:Window>

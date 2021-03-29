@@ -1,0 +1,115 @@
+﻿<catel:DataWindow x:Class="FurnitureFactoryApp.Views.Products.ProductUpdateWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:catel="http://schemas.catelproject.com"
+                  xmlns:converter="clr-namespace:FurnitureFactoryApp.Converters"
+                  ResizeMode="NoResize"
+                  MinWidth="370">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   TextAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="17">Изменение продукта</TextBlock>
+
+        <Grid Grid.Row="1"
+              Margin="15 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="TextAlignment"
+                            Value="Right" />
+                    <Setter Property="Margin"
+                            Value="10 5" />
+                    <Setter Property="FontSize"
+                            Value="16" />
+                </Style>
+
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin"
+                            Value="0 5" />
+                    <Setter Property="MaxWidth"
+                            Value="200" />
+                </Style>
+
+                <Style TargetType="ComboBox">
+                    <Setter Property="Margin"
+                            Value="0 5" />
+                </Style>
+            </Grid.Resources>
+
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0">Наименование:</TextBlock>
+            <TextBox Grid.Row="0"
+                     Grid.Column="1"
+                     Text="{Binding Name}"></TextBox>
+
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0">Длина:</TextBlock>
+            <TextBox Grid.Row="1"
+                     Grid.Column="1"
+                     Text="{Binding Length}"></TextBox>
+
+            <TextBlock Grid.Row="2"
+                       Grid.Column="0">Ширина:</TextBlock>
+            <TextBox Grid.Row="2"
+                     Grid.Column="1"
+                     Text="{Binding Width}"></TextBox>
+
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0">Высота:</TextBlock>
+            <TextBox Grid.Row="3"
+                     Grid.Column="1"
+                     Text="{Binding Height}"></TextBox>
+
+            <TextBlock Grid.Row="4"
+                       Grid.Column="0">Цвет:</TextBlock>
+            <TextBox Grid.Row="4"
+                     Grid.Column="1"
+                     Text="{Binding Color}"></TextBox>
+
+            <TextBlock Grid.Row="5"
+                       Grid.Column="0">Стоимость:</TextBlock>
+            <TextBox Grid.Row="5"
+                     Grid.Column="1"
+                     Text="{Binding Cost, Converter={converter:DecimalToStringConverter}}"></TextBox>
+
+            <TextBlock Grid.Row="6"
+                       Grid.Column="0">Количество:</TextBlock>
+            <TextBox Grid.Row="6"
+                     Grid.Column="1"
+                     Text="{Binding Count, Converter={catel:IntToStringConverter}}"></TextBox>
+
+            <TextBlock Grid.Row="7"
+                       Grid.Column="0">Тип:</TextBlock>
+            <ComboBox Grid.Row="7"
+                      Grid.Column="1"
+                      ItemsSource="{Binding Types}"
+                      SelectedItem="{Binding Type}"
+                      SelectedValue="{Binding Type.Name}"
+                      SelectedValuePath="Name"
+                      DisplayMemberPath="Name"></ComboBox>
+        </Grid>
+    </Grid>
+
+</catel:DataWindow>
