@@ -123,7 +123,8 @@ namespace FurnitureFactoryApp.Models {
             using (SqlConnection connection = new SqlConnection(AppConfig.ConnectionString)) {
                 connection.Open();
 
-                var command = new SqlCommand($"DELETE FROM products WHERE product_id = {Id}", connection);
+                var command = new SqlCommand($"DELETE FROM products WHERE product_id = @id", connection);
+                command.Parameters.Add(new SqlParameter("@id", Id));
                 command.ExecuteNonQuery();
 
                 Trace.WriteLine("Успешное удаление продукта!");
@@ -161,7 +162,17 @@ namespace FurnitureFactoryApp.Models {
 
         protected void Update(SqlConnection connection) {
             //Создаём команду и выполняем
-            SqlCommand cmd = new SqlCommand($"UPDATE products SET type_id = {Type.Id}, name = '{Name}', length = '{Length}', width = '{Width}', height = '{Height}', color = '{Color}', cost = @cost, count = {Count} WHERE product_id = {Id}", connection);
+            SqlCommand cmd = new SqlCommand($"UPDATE products SET type_id = @type_id, name = @name, length = @length, width = @width, height = @height, color = @color, cost = @cost, count = @count WHERE product_id = @id", connection);
+            cmd.Parameters.AddRange(new[] {
+                new SqlParameter("@type_id", Type.Id),
+                new SqlParameter("@name", Name),
+                new SqlParameter("@length", Length),
+                new SqlParameter("@width", Width),
+                new SqlParameter("@height", Height),
+                new SqlParameter("@color", Color),
+                new SqlParameter("@count", Count),
+                new SqlParameter("@id", Id),
+            });
             cmd.Parameters.AddWithValue("@cost", Cost); //чтобы decimal не конвертировался в строку
 
             cmd.ExecuteNonQuery();

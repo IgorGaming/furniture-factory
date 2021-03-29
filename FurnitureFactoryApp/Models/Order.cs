@@ -89,7 +89,8 @@ namespace FurnitureFactoryApp.Models {
             using (SqlConnection connection = new SqlConnection(AppConfig.ConnectionString)) {
                 connection.Open();
 
-                var command = new SqlCommand($"DELETE FROM orders WHERE order_id = {Id}", connection);
+                var command = new SqlCommand($"DELETE FROM orders WHERE order_id = @id", connection);
+                command.Parameters.Add(new SqlParameter("@id", Id));
                 var reader = command.ExecuteReader();
 
                 Trace.WriteLine("Успешное удаление продукта!");
@@ -124,7 +125,8 @@ namespace FurnitureFactoryApp.Models {
         public void LoadProducts() {
             using (SqlConnection connection = new SqlConnection(AppConfig.ConnectionString)) {
                 connection.Open();
-                SqlCommand command = new SqlCommand($"SELECT * FROM products p RIGHT JOIN(SELECT COUNT(product_id) AS item_count, product_id AS pr_id FROM order_product WHERE order_product.order_id = {Id} GROUP BY product_id) products ON p.product_id = pr_id", connection);
+                SqlCommand command = new SqlCommand($"SELECT * FROM products p RIGHT JOIN(SELECT COUNT(product_id) AS item_count, product_id AS pr_id FROM order_product WHERE order_product.order_id = @id GROUP BY product_id) products ON p.product_id = pr_id", connection);
+                command.Parameters.Add(new SqlParameter("@id", Id));
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (!reader.HasRows) {

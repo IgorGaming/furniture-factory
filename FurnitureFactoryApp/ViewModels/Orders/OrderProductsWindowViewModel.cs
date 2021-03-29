@@ -54,12 +54,22 @@
                     connection.Open();
 
                     //Количество добавляемого товара в данном заказе
-                    var cmd = new SqlCommand($"SELECT COUNT(*) FROM order_product WHERE order_id = {Order.Id} AND product_id = {productRepository.Product.Id}", connection);
+                    var cmd = new SqlCommand($"SELECT COUNT(*) FROM order_product WHERE order_id = @order_id AND product_id = @product_id", connection);
+                    cmd.Parameters.AddRange(new[] {
+                        new SqlParameter("@order_id", Order.Id),
+                        new SqlParameter("@product_id", productRepository.Product.Id),
+                    });
+
                     int count = cmd.ExecuteScalar() == null ? 0 : (int)cmd.ExecuteScalar();
 
                     //Создаём команду на добавление и выполняем столько раз, сколько нужно
                     for (int i = 0; i < productRepository.ProductCount; i++) {
-                        cmd = new SqlCommand($"INSERT INTO order_product (order_id, product_id) VALUES ({Order.Id}, {productRepository.Product.Id})", connection);
+                        cmd = new SqlCommand($"INSERT INTO order_product (order_id, product_id) VALUES (@order_id, @product_id)", connection);
+                        cmd.Parameters.AddRange(new[] {
+                            new SqlParameter("@order_id", Order.Id),
+                            new SqlParameter("@product_id", productRepository.Product.Id),
+                        });
+
                         cmd.ExecuteNonQuery();
                     }
 
@@ -87,11 +97,19 @@
                 connection.Open();
 
                 int productId = SelectedProduct.Id;
-                var cmd = new SqlCommand($"SELECT COUNT(*) FROM order_product WHERE order_id = {Order.Id} AND product_id = {SelectedProduct.Id}", connection);
+                var cmd = new SqlCommand($"SELECT COUNT(*) FROM order_product WHERE order_id = @order_id AND product_id = @product_id", connection);
+                cmd.Parameters.AddRange(new[] {
+                    new SqlParameter("@order_id", Order.Id),
+                    new SqlParameter("@product_id", SelectedProduct.Id),
+                });
                 int count = cmd.ExecuteScalar() == null ? 0 : (int)cmd.ExecuteScalar();
 
                 //Удаляем 1 ед. продукта из заказа
-                cmd = new SqlCommand($"DELETE TOP(1) FROM order_product WHERE order_id = {Order.Id} AND product_id = {SelectedProduct.Id}", connection);
+                cmd = new SqlCommand($"DELETE TOP(1) FROM order_product WHERE order_id = @order_id AND product_id = @product_id", connection);
+                cmd.Parameters.AddRange(new[] {
+                    new SqlParameter("@order_id", Order.Id),
+                    new SqlParameter("@product_id", SelectedProduct.Id),
+                });
                 cmd.ExecuteNonQuery();
 
                 //Если товаров было больше 1, то уменьшаем количество в таблице, иначе удаляем строку из таблицы

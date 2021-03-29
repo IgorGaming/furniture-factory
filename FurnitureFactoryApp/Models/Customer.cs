@@ -76,7 +76,8 @@ namespace FurnitureFactoryApp.Models {
             using (SqlConnection connection = new SqlConnection(AppConfig.ConnectionString)) {
                 connection.Open();
 
-                var command = new SqlCommand($"DELETE FROM customers WHERE customer_id = {Id}", connection);
+                var command = new SqlCommand($"DELETE FROM customers WHERE customer_id = @id", connection);
+                command.Parameters.Add(new SqlParameter("@id", Id));
                 command.ExecuteNonQuery();
 
                 Trace.WriteLine("Успешное удаление заказчика!");
@@ -109,7 +110,14 @@ namespace FurnitureFactoryApp.Models {
 
         protected void Update(SqlConnection connection) {
             //Создаём команду и выполняем
-            SqlCommand cmd = new SqlCommand($"UPDATE customers SET fio = '{Fio}', address = '{Address}', telephone = '{Telephone}' WHERE customer_id = {Id}", connection);
+            SqlCommand cmd = new SqlCommand($"UPDATE customers SET fio = @fio, address = @address, telephone = @phone WHERE customer_id = @id", connection);
+            cmd.Parameters.AddRange(new[] {
+                new SqlParameter("@fio", Fio),
+                new SqlParameter("@address", Address),
+                new SqlParameter("@phone", Telephone),
+                new SqlParameter("@id", Id),
+            });
+
             cmd.ExecuteNonQuery();
 
             Trace.WriteLine("Успешное изменение заказчика!");

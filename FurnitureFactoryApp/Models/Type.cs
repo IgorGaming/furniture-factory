@@ -71,11 +71,13 @@ namespace FurnitureFactoryApp.Models {
             using (SqlConnection connection = new SqlConnection(AppConfig.ConnectionString)) {
                 connection.Open();
 
-                var command = new SqlCommand($"SELECT COUNT(*) FROM products WHERE type_id = {Id}", connection);
+                var command = new SqlCommand($"SELECT COUNT(*) FROM products WHERE type_id = @id", connection);
+                command.Parameters.Add(new SqlParameter("@id", Id));
                 int count = (int)command.ExecuteScalar();
 
                 if (count == 0) {
-                    command = new SqlCommand($"DELETE FROM types WHERE type_id = {Id}", connection);
+                    command = new SqlCommand($"DELETE FROM types WHERE type_id = @id", connection);
+                    command.Parameters.Add(new SqlParameter("@id", Id));
                     command.ExecuteNonQuery();
 
                     Trace.WriteLine("Успешное удаление типа продукта!");
@@ -92,11 +94,12 @@ namespace FurnitureFactoryApp.Models {
             SqlCommand cmd = new SqlCommand("sp_addProductType", connection);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            //Добавляем параметры
-            cmd.Parameters.Add(new SqlParameter("@name", Name));
+            cmd.Parameters.AddRange(new[] {
+                new SqlParameter("@name", Name),
 
-            //Возвращаемое значение
-            cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int) { Direction = ParameterDirection.Output });
+                //Возвращаемое значение
+                new SqlParameter("@id", SqlDbType.Int) { Direction = ParameterDirection.Output },
+            });
 
             //Выполняем
             cmd.ExecuteNonQuery();
@@ -109,7 +112,11 @@ namespace FurnitureFactoryApp.Models {
 
         protected void Update(SqlConnection connection) {
             //Создаём команду и выполняем
-            SqlCommand cmd = new SqlCommand($"UPDATE types SET name = '{Name}' WHERE type_id = {Id}", connection);
+            SqlCommand cmd = new SqlCommand($"UPDATE types SET name = @name WHERE type_id = @id", connection);
+            cmd.Parameters.AddRange(new[] {
+                new SqlParameter("@name", Name),
+                new SqlParameter("@id", Id)
+            });
             cmd.ExecuteNonQuery();
 
             Trace.WriteLine("Успешное изменение типа продукта!");
@@ -123,7 +130,8 @@ namespace FurnitureFactoryApp.Models {
             using (SqlConnection connection = new SqlConnection(AppConfig.ConnectionString)) {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT COUNT(*) FROM types WHERE name = '{Name}'", connection);
+                SqlCommand command = new SqlCommand($"SELECT COUNT(*) FROM types WHERE name = @name", connection);
+                command.Parameters.Add(new SqlParameter("@name", Name));
                 int number = (int)command.ExecuteScalar();
 
                 return number != 0;
