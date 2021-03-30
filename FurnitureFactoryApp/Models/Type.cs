@@ -127,6 +127,10 @@ namespace FurnitureFactoryApp.Models {
         /// </summary>
         /// <returns>Возвращает true, если данный тип уже существует.</returns>
         public bool Exists() {
+            if (Name == null) {
+                return false;
+            }
+
             using (SqlConnection connection = new SqlConnection(AppConfig.ConnectionString)) {
                 connection.Open();
 

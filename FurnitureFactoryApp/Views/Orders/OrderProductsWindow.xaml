@@ -33,16 +33,10 @@
                 <DataGridTextColumn Width="2*"
                                     Header="Наименование"
                                     Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn Width="1*"
-                                    Header="Длина"
-                                    Binding="{Binding Length}"></DataGridTextColumn>
-                <DataGridTextColumn Width="1*"
-                                    Header="Ширина"
-                                    Binding="{Binding Width}"></DataGridTextColumn>
-                <DataGridTextColumn Width="1*"
-                                    Header="Высота"
-                                    Binding="{Binding Height}"></DataGridTextColumn>
-                <DataGridTextColumn Width="1*"
+                <DataGridTextColumn Width="2*"
+                                    Header="Размеры"
+                                    Binding="{Binding Size}"></DataGridTextColumn>
+                <DataGridTextColumn Width="2*"
                                     Header="Цвет"
                                     Binding="{Binding Color}"></DataGridTextColumn>
                 <DataGridTextColumn Width="2*"
@@ -59,13 +53,14 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
             <StackPanel.Resources>
-                <Style TargetType="Button">
+                <Style TargetType="Button"
+                       BasedOn="{StaticResource MaterialDesignFlatLightBgButton}">
                     <Setter Property="Margin"
                             Value="25 10" />
+                    <Setter Property="Height"
+                            Value="30" />
                     <Setter Property="MinWidth"
                             Value="100" />
-                    <Setter Property="MinHeight"
-                            Value="30" />
                 </Style>
             </StackPanel.Resources>
 

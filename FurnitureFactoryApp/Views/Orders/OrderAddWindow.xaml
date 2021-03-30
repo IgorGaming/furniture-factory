@@ -3,11 +3,12 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:catel="http://schemas.catelproject.com"
                   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                   SizeToContent="Manual"
                   ResizeMode="CanResize"
                   MinHeight="350"
                   MinWidth="350"
-                  Width="350"
+                  Width="450"
                   Height="350">
 
     <Grid VerticalAlignment="Stretch"
@@ -28,13 +29,17 @@
                     Margin="10 0"
                     VerticalAlignment="Center">
 
-            <TextBlock>Дата доставки:</TextBlock>
-            <DatePicker SelectedDate="{Binding ShipDate}"
+            <DatePicker Margin="5 10"
+                        SelectedDate="{Binding ShipDate}"
                         DisplayDateStart="{Binding StartDate, Mode=OneTime}"
-                        FirstDayOfWeek="Monday"></DatePicker>
+                        FirstDayOfWeek="Monday"
+                        materialDesign:HintAssist.Hint="Дата доставки"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
-            <TextBlock>Поиск по ФИО заказчика:</TextBlock>
-            <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox Margin="5 10"
+                     materialDesign:TextFieldAssist.HasFilledTextField="True"
+                     materialDesign:HintAssist.Hint="ФИО заказчика"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Behaviors>
                     <catel:UpdateBindingOnTextChanged UpdateDelay="1000" />
                 </i:Interaction.Behaviors>
@@ -53,9 +58,6 @@
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="30"
-                                    Header="Id"
-                                    Binding="{Binding Id}"></DataGridTextColumn>
                 <DataGridTextColumn Width="2*"
                                     Header="ФИО"
                                     Binding="{Binding Fio}"></DataGridTextColumn>

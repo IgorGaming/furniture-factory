@@ -26,6 +26,8 @@ namespace FurnitureFactoryApp.Models {
 
         public int Count { get; set; }
 
+        public string Size => $"{Height}x{Width}x{Length}";
+
         public Type Type { get; set; } = new Type();
 
         /**Получение всех продуктов.*/

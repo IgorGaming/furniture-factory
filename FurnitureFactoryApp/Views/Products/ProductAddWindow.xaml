@@ -3,6 +3,7 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:catel="http://schemas.catelproject.com"
                   xmlns:converter="clr-namespace:FurnitureFactoryApp.Converters"
+                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                   ResizeMode="NoResize"
                   MinWidth="370">
 
@@ -26,134 +27,77 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="3*" />
-            </Grid.ColumnDefinitions>
-
             <Grid.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="TextAlignment"
-                            Value="Right" />
+                <Style TargetType="TextBox"
+                       BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
                     <Setter Property="Margin"
-                            Value="10 5" />
-                    <Setter Property="FontSize"
-                            Value="16" />
+                            Value="10, 5" />
+                    <Setter Property="VerticalAlignment"
+                            Value="Top" />
+                    <Setter Property="Height"
+                            Value="Auto" />
                 </Style>
 
-                <Style TargetType="TextBox">
+                <Style TargetType="ComboBox"
+                       BasedOn="{StaticResource MaterialDesignComboBox}">
                     <Setter Property="Margin"
-                            Value="0 5" />
-                    <Setter Property="MaxWidth"
-                            Value="200" />
-                </Style>
-
-                <Style TargetType="ComboBox">
-                    <Setter Property="Margin"
-                            Value="0 5" />
+                            Value="10, 5" />
                 </Style>
             </Grid.Resources>
-
-            <TextBlock Grid.Row="0"
-                       Grid.Column="0">Наименование:</TextBlock>
             <TextBox Grid.Row="0"
-                     Grid.Column="1"
+                     materialDesign:HintAssist.Hint="Наименование"
                      Text="{Binding Name}"></TextBox>
 
-            <TextBlock Grid.Row="1"
-                       Grid.Column="0">Длина:</TextBlock>
-            <TextBox Grid.Row="1"
-                     Grid.Column="1"
-                     Text="{Binding Length}"></TextBox>
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        Margin="10, 5"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBox"
+                           BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                        <Setter Property="Width"
+                                Value="100" />
+                        <Setter Property="VerticalAlignment"
+                                Value="Top" />
+                        <Setter Property="Height"
+                                Value="Auto" />
+                    </Style>
+                </StackPanel.Resources>
+                <TextBox materialDesign:HintAssist.Hint="Длина"
+                         Text="{Binding Length}"></TextBox>
+                <TextBlock Margin="5, 0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center">X</TextBlock>
+                <TextBox materialDesign:HintAssist.Hint="Ширина"
+                         Text="{Binding Width}"></TextBox>
+                <TextBlock Margin="5, 0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center">X</TextBlock>
+                <TextBox materialDesign:HintAssist.Hint="Высота"
+                         Text="{Binding Height}"></TextBox>
+            </StackPanel>
 
-            <TextBlock Grid.Row="2"
-                       Grid.Column="0">Ширина:</TextBlock>
             <TextBox Grid.Row="2"
-                     Grid.Column="1"
-                     Text="{Binding Width}"></TextBox>
-
-            <TextBlock Grid.Row="3"
-                       Grid.Column="0">Высота:</TextBlock>
-            <TextBox Grid.Row="3"
-                     Grid.Column="1"
-                     Text="{Binding Height}"></TextBox>
-
-            <TextBlock Grid.Row="4"
-                       Grid.Column="0">Цвет:</TextBlock>
-            <TextBox Grid.Row="4"
-                     Grid.Column="1"
+                     materialDesign:HintAssist.Hint="Цвет"
                      Text="{Binding Color}"></TextBox>
 
-            <TextBlock Grid.Row="5"
-                       Grid.Column="0">Стоимость:</TextBlock>
-            <TextBox Grid.Row="5"
-                     Grid.Column="1"
+            <TextBox Grid.Row="3"
+                     materialDesign:HintAssist.Hint="Стоимость"
                      Text="{Binding Cost, Converter={converter:DecimalToStringConverter}}"></TextBox>
 
-            <TextBlock Grid.Row="6"
-                       Grid.Column="0">Количество:</TextBlock>
-            <TextBox Grid.Row="6"
-                     Grid.Column="1"
+            <TextBox Grid.Row="4"
+                     materialDesign:HintAssist.Hint="Количество"
                      Text="{Binding Count, Converter={catel:IntToStringConverter}}"></TextBox>
 
-            <TextBlock Grid.Row="7"
-                       Grid.Column="0">Тип:</TextBlock>
-            <ComboBox Grid.Row="7"
-                      Grid.Column="1"
+            <ComboBox Grid.Row="5"
+                      materialDesign:HintAssist.Hint="Тип"
                       ItemsSource="{Binding Types}"
                       DisplayMemberPath="Name"
                       SelectedItem="{Binding Type}"></ComboBox>
         </Grid>
-
-        <!--
-        <StackPanel Grid.Row="1"
-                    Grid.Column="0"
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Stretch">
-            <StackPanel.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="TextAlignment"
-                            Value="Right" />
-                    <Setter Property="Margin"
-                            Value="15" />
-                </Style>
-            </StackPanel.Resources>
-            <TextBlock>Наименование:</TextBlock>
-            <TextBlock>Длина:</TextBlock>
-            <TextBlock>Ширина:</TextBlock>
-            <TextBlock>Высота:</TextBlock>
-            <TextBlock>Цвет:</TextBlock>
-            <TextBlock>Стоимость:</TextBlock>
-            <TextBlock>Количество:</TextBlock>
-            <TextBlock>Тип:</TextBlock>
-        </StackPanel>
-
-        <StackPanel Grid.Row="1"
-                    Grid.Column="1"
-                    VerticalAlignment="Center">
-            <StackPanel.Resources>
-                <Style TargetType="TextBox">
-                    <Setter Property="Margin"
-                            Value="15" />
-                </Style>
-            </StackPanel.Resources>
-
-            <TextBox Text="{Binding Name, Mode=OneWayToSource}"></TextBox>
-            <TextBox Text="{Binding Length, Mode=OneWayToSource}"></TextBox>
-            <TextBox Text="{Binding Width, Mode=OneWayToSource}"></TextBox>
-            <TextBox Text="{Binding Height, Mode=OneWayToSource}"></TextBox>
-            <TextBox Text="{Binding Color, Mode=OneWayToSource}"></TextBox>
-            <TextBox Text="{Binding Cost, Mode=OneWayToSource, Converter={converter:DecimalToStringConverter}}"></TextBox>
-            <TextBox Text="{Binding Count, Mode=OneWayToSource, Converter={catel:IntToStringConverter}}"></TextBox>
-            <ComboBox ItemsSource="{Binding Types, Mode=OneTime}"
-                      DisplayMemberPath="Name"
-                      SelectedItem="{Binding Type, Mode=OneWayToSource}"></ComboBox>
-        </StackPanel>
-        -->
     </Grid>
 
 </catel:DataWindow>

@@ -2,22 +2,21 @@
                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:catel="http://schemas.catelproject.com"
+                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                   ResizeMode="NoResize"
                   MaxHeight="300"
                   MinWidth="370">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
                    TextAlignment="Center"
                    VerticalAlignment="Center"
-                   FontSize="17">Изменение заказчика</TextBlock>
+                   FontSize="19">Изменение заказчика</TextBlock>
 
         <Grid Grid.Row="1"
               Margin="15 0">
@@ -27,44 +26,31 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="3*" />
-            </Grid.ColumnDefinitions>
-
             <Grid.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="TextAlignment"
-                            Value="Right" />
+                <Style TargetType="TextBox"
+                       BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
                     <Setter Property="Margin"
-                            Value="10 5" />
-                </Style>
-
-                <Style TargetType="TextBox">
-                    <Setter Property="Margin"
-                            Value="0 5" />
-                    <Setter Property="MaxWidth"
-                            Value="250" />
+                            Value="10, 5" />
+                    <Setter Property="VerticalAlignment"
+                            Value="Top" />
+                    <Setter Property="Height"
+                            Value="Auto" />
                 </Style>
             </Grid.Resources>
 
-            <TextBlock Grid.Row="0"
-                       Grid.Column="0">ФИО:</TextBlock>
             <TextBox Grid.Row="0"
-                     Grid.Column="1"
-                     Text="{Binding Fio}"></TextBox>
+                     materialDesign:HintAssist.Hint="ФИО"
+                     materialDesign:HintAssist.IsFloating="True"
+                     Text="{Binding Fio}"
+                     Cursor="IBeam" />
 
-            <TextBlock Grid.Row="1"
-                       Grid.Column="0">Адрес:</TextBlock>
             <TextBox Grid.Row="1"
-                     Grid.Column="1"
-                     Text="{Binding Address}"></TextBox>
+                     materialDesign:HintAssist.Hint="Адрес"
+                     Text="{Binding Address}" />
 
-            <TextBlock Grid.Row="2"
-                       Grid.Column="0">Телефон:</TextBlock>
             <TextBox Grid.Row="2"
-                     Grid.Column="1"
-                     Text="{Binding Telephone}"></TextBox>
+                     materialDesign:HintAssist.Hint="Телефон"
+                     Text="{Binding Telephone}" />
         </Grid>
     </Grid>
 

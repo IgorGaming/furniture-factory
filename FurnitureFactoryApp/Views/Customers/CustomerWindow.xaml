@@ -3,9 +3,10 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:catel="http://schemas.catelproject.com"
                   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                   SizeToContent="Manual"
                   ResizeMode="CanResize"
-                  MinWidth="450"
+                  MinWidth="550"
                   MinHeight="400"
                   Width="550"
                   Height="400">
@@ -16,12 +17,12 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0"
-                    VerticalAlignment="Center"
-                    Margin="5 10">
-            <TextBlock>Поиск по ФИО заказчика:</TextBlock>
-            <TextBox Text="{Binding SearchCustomer, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
+        <TextBox Grid.Row="0"
+                 Margin="5 10"
+                 materialDesign:TextFieldAssist.HasFilledTextField="True"
+                 materialDesign:HintAssist.Hint="ФИО заказчика"
+                 Text="{Binding SearchCustomer, UpdateSourceTrigger=PropertyChanged}"
+                 Cursor="IBeam" />
 
         <DataGrid Grid.Row="1"
                   ItemsSource="{Binding FilteredCustomers}"
@@ -34,9 +35,6 @@
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="30"
-                                    Header="Id"
-                                    Binding="{Binding Id}"></DataGridTextColumn>
                 <DataGridTextColumn Width="2*"
                                     Header="ФИО"
                                     Binding="{Binding Fio}"></DataGridTextColumn>
@@ -54,22 +52,23 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
             <StackPanel.Resources>
-                <Style TargetType="Button">
+                <Style TargetType="Button"
+                       BasedOn="{StaticResource MaterialDesignFlatLightBgButton}">
                     <Setter Property="Margin"
                             Value="25 10" />
+                    <Setter Property="Height"
+                            Value="30" />
                     <Setter Property="MinWidth"
                             Value="100" />
-                    <Setter Property="MinHeight"
-                            Value="30" />
                 </Style>
             </StackPanel.Resources>
 
             <Button Command="{Binding RefreshCustomerCommand}"
-                    Height="32"
-                    MinWidth="0"
-                    Margin="0,0,0,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
                     ToolTip="Обновить">
-                <Image Source="/Images/refresh_icon_143080.ico" />
+                <materialDesign:PackIcon Kind="Refresh"
+                                         Height="24"
+                                         Width="24" />
             </Button>
 
             <Button Command="{Binding AddCustomerCommand}">Добавить</Button>
